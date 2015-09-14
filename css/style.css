@@ -1,0 +1,162 @@
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+body {
+	font-family:Lato;
+	background-color:#6F6F6F;
+	display:block;
+}
+
+.search {
+	width:16em;
+	font-size:1.2em;
+	margin:1.5em 1.8em;
+	float:left;
+	background-color:#B3B3B3;
+	border-radius:.5em;
+}
+
+#tastekid {
+	font-weight:900;
+	color:#7FB5DA;
+}
+
+#search-submit {
+	display:block;
+	width:5em;
+	margin:8em auto 1em;
+}
+
+.cb-option {
+	width:4.7em;
+	margin:0 .1em;
+	float:left;
+}
+
+.text-option {
+	width:15.4em;
+	margin:.1em auto;
+	text-align:right;
+}
+
+.search-top {
+	margin:.2em .3em .2em .6em;
+	width:15em;
+}
+
+.search-middle {
+	width:15.6em;
+	margin:.5em auto;
+}
+
+#book-search,
+#author-search,
+#band-search,
+#show-search,
+#movie-search,
+#game-search {
+	border-radius:15px;
+	border:none;
+}
+
+#search-submit{
+	border-radius:15px;
+	border:none;
+	background-color:#7FB5DA;
+	transition:all linear 0.15s;
+}
+
+#search-submit:hover{
+	background-color:#a7cce5;
+}
+
+.header{
+	margin:0 4em;
+}
+
+#divider {
+	width:1px;
+	height:40em;
+	position:absolute;
+	top:8em;
+	left:22em;
+	background-color:#CFCFCF;
+}
+
+.results {
+	width:74em;
+	height:50em;
+	overflow:auto;
+	display:inline-block;
+}
+
+.tab-links {
+	background-color:#6F6F6F;
+	margin:0 0;
+	-webkit-padding-start:0;
+}
+
+.tab-links li {
+	margin:0 5px;
+	float:left;
+	list-style:none;
+}
+
+.tab-links a{
+	padding:9px 15px;
+	display:inline-block;
+	border-radius:5px 5px 0px 0px;
+	width:8em;
+	font-weight:700;
+	text-decoration:none;
+	background:#7FB5DA;
+	font-size:16px;
+	color:#4c4c4c;
+	text-align:center;
+	transition:all linear 0.15s;
+}
+
+.tab-links a:hover{
+	background:#a7cce5;
+	text-decoration:none;
+}
+
+li.active a, li.active a:hover{
+	background:#B3B3B3;
+	color:#4c4c4c;
+}
+
+.tab-content {
+	padding:15px;
+	width:70em;
+	height:45em;
+	margin:0 0 0 5px;
+	border-radius:0 .5em .5em .5em;
+	background-color:#B3B3B3;
+	overflow:auto;
+}
+
+.tab,
+.hidden {
+	display:none;
+}
+
+.tab.active {
+	display:block;
+}
+
+.search-result {
+	display:block;
+	width:60em;
+	height:8em;
+	border-radius:.5em;
+	background-color:#969595;
+	padding:.1em 1em;
+}
