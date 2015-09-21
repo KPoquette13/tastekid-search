@@ -81,15 +81,6 @@ body {
 	margin:0 4em;
 }
 
-#divider {
-	width:1px;
-	height:40em;
-	position:absolute;
-	top:8em;
-	left:22em;
-	background-color:#CFCFCF;
-}
-
 .results {
 	width:74em;
 	height:50em;
