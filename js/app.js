@@ -23,25 +23,58 @@ function buildObject(name, type, description, wURL, yURL){
 	return resultObj;
 }
 
-function showObjects(obj){
-	var item = $('.templates').clone(); 
+function showObject(obj){
+	var item = $('.templates .search-result').clone(); 
 
 	var itemName = item.find('.name');
 	itemName.text(obj.name);
 
+	var itemType = item.find('.type');
+	itemType.text(obj.type);
+
 	var itemDesc = item.find('.description');
 	itemDesc.text(obj.description);
 
+	var itemURL = item.find('.url a');
+	itemURL.attr('href', obj.wURL);
+	itemURL.text('Wikipedia');
+
+	var itemYT = item.find('.youtube');
+	if(obj.yURL !== 'N/A'){
+		itemYT.html('<a href="' + obj.yURL + '" target="_blank">Youtube</a>');
+	} else {
+		itemYT.text(obj.yURL);
+	}
+	
+	console.log(item);
+	return item;
 }
 
 function updateLists(){
-	if(bookList.length > 0){
-		for(var i = 0; i < bookList.length; i++){
-
-		}
-	} else {
-
-	}
+	$.each(bookList, function(i, item) {
+		var resultItem = showObject(item);
+		$('#book-tab').append(resultItem);
+	});
+	$.each(authorList, function(i, item) {
+		var resultItem = showObject(item);
+		$('#author-tab').append(resultItem);
+	});
+	$.each(bandList, function(i, item) {
+		var resultItem = showObject(item);
+		$('#band-tab').append(resultItem);
+	});
+	$.each(showList, function(i, item) {
+		var resultItem = showObject(item);
+		$('#show-tab').append(resultItem);
+	});
+	$.each(movieList, function(i, item) {
+		var resultItem = showObject(item);
+		$('#movie-tab').append(resultItem);
+	});
+	$.each(gameList, function(i, item) {
+		var resultItem = showObject(item);
+		$('#game-tab').append(resultItem);
+	});
 }
 
 function buildQuery(){
@@ -107,8 +140,6 @@ function populateData(resultArray){
 				break;
 		}
 	});
-
-	updateLists();
 }
 
 function getData(queryString){
@@ -125,10 +156,12 @@ function getData(queryString){
 	.done(function(result){
 		var finalResults = result.Similar.Results;
 		populateData(finalResults);
+		updateLists();
 	});
 }
 
 $(document).ready(function() {
+	//controls tabs
 	$('.tab-links a').on('click', function(e){
 		e.preventDefault();
 		var currentTab = $(this).attr('href');
@@ -138,6 +171,7 @@ $(document).ready(function() {
 		$(this).parent('li').addClass('active').siblings().removeClass('active');
 	});
 
+	//submit the query
 	$('#search-options').submit(function(e) {
 		e.preventDefault();
 		$('.tab').html('');
@@ -147,6 +181,7 @@ $(document).ready(function() {
 		getData(queryStr);
 	});
 
+	//When checkbox is checked, flag to add to query
 	$('#book').change(function () {
 		if($(this).is(':checked')){
 			bookCheck = true;
