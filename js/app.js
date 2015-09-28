@@ -5,26 +5,64 @@ var showCheck = false;
 var movieCheck = false;
 var gameCheck = false;
 
+var bookList = [];
+var authorList = [];
+var bandList = [];
+var showList = [];
+var movieList = [];
+var gameList = [];
+
+function buildObject(name, type, description, wURL, yURL){
+	var resultObj = {};
+	resultObj.name = name;
+	resultObj.type = type;
+	resultObj.description = description;
+	resultObj.wURL = wURL;
+	resultObj.yURL = yURL;
+
+	return resultObj;
+}
+
+function showObjects(obj){
+	var item = $('.templates').clone(); 
+
+	var itemName = item.find('.name');
+	itemName.text(obj.name);
+
+	var itemDesc = item.find('.description');
+	itemDesc.text(obj.description);
+
+}
+
+function updateLists(){
+	if(bookList.length > 0){
+		for(var i = 0; i < bookList.length; i++){
+
+		}
+	} else {
+
+	}
+}
 
 function buildQuery(){
 	var queryString = '';
 		if(bookCheck){
-			queryString = queryString + $('#book-search').val() + ', ';
+			queryString = 'book:' + queryString + $('#book-search').val() + ', ';
 		}
 		if(authorCheck){
-			queryString = queryString + $('#author-search').val() + ', ';
+			queryString = 'author:' +queryString + $('#author-search').val() + ', ';
 		}
 		if(bandCheck){
-			queryString = queryString + $('#band-search').val() + ', ';
+			queryString = 'band:' + queryString + $('#band-search').val() + ', ';
 		}
 		if(showCheck){
-			queryString = queryString + $('#show-search').val() + ', ';
+			queryString = 'show:' + queryString + $('#show-search').val() + ', ';
 		}
 		if(movieCheck){
-			queryString = queryString + $('#movie-search').val() + ', ';
+			queryString = 'movie:' + queryString + $('#movie-search').val() + ', ';
 		}
 		if(gameCheck){
-			queryString = queryString + $('#game-search').val() + ', ';
+			queryString = 'game:' + queryString + $('#game-search').val() + ', ';
 		}
 
 		if(bookCheck || authorCheck || bandCheck || showCheck || movieCheck || gameCheck){
@@ -35,12 +73,47 @@ function buildQuery(){
 }
 
 function populateData(resultArray){
-	
+	$.each(resultArray, function(index, value) {
+		var name = value.Name;
+		var type = value.Type;
+		var description = value.wTeaser;
+		var wURL = value.wUrl;
+		var yURL;
+		if(value.yUrl !== null){
+			yURL = value.yUrl;
+		} else {
+			yURL = 'N/A';
+		}
+		var finalObj = buildObject(name, type, description, wURL, yURL);
+
+		switch(finalObj.type){
+			case 'book':
+				bookList.push(finalObj);
+				break;
+			case 'movie':
+				movieList.push(finalObj);
+				break;
+			case 'band':
+				bandList.push(finalObj);
+				break;
+			case 'show':
+				showList.push(finalObj);
+				break;
+			case 'author':
+				authorList.push(finalObj);
+				break;
+			case 'game':
+				gameList.push(finalObj);
+				break;
+		}
+	});
+
+	updateLists();
 }
 
 function getData(queryString){
 	var queryURL = 'https://www.tastekid.com/api/similar?q=';
-	var queryKey = '&k=158414-JSONAPIS-KMPT5AN1'
+	var queryKey = '&k=158414-JSONAPIS-KMPT5AN1';
 
 	var finalURL = queryURL + queryString + queryKey + '&info=1';
 
@@ -50,8 +123,8 @@ function getData(queryString){
 		type: 'GET'
 	})
 	.done(function(result){
-		finalResults = result.Similar.Results;
-		console.log(finalResults);
+		var finalResults = result.Similar.Results;
+		populateData(finalResults);
 	});
 }
 
@@ -70,68 +143,54 @@ $(document).ready(function() {
 		$('.tab').html('');
 
 		var queryStr = buildQuery();
-		
-		console.log(queryStr);
 
 		getData(queryStr);
 	});
 
 	$('#book').change(function () {
 		if($(this).is(':checked')){
-			console.log("checked true");
 			bookCheck = true;
 		}else{
-			console.log("checked false");
 			bookCheck = false;
 		}
 	});
 
 	$('#author').change(function () {
 		if($(this).is(':checked')){
-			console.log("checked true");
 			authorCheck = true;
 		}else{
-			console.log("checked false");
 			authorCheck = false;
 		}
 	});
 
 	$('#band').change(function () {
 		if($(this).is(':checked')){
-			console.log("checked true");
 			bandCheck = true;
 		}else{
-			console.log("checked false");
 			bandCheck = false;
 		}
 	});
 
 	$('#show').change(function () {
 		if($(this).is(':checked')){
-			console.log("checked true");
 			showCheck = true;
 		}else{
-			console.log("checked false");
 			showCheck = false;
 		}
 	});
 
 	$('#movie').change(function () {
 		if($(this).is(':checked')){
-			console.log("checked true");
 			movieCheck = true;
 		}else{
-			console.log("checked false");
 			movieCheck = false;
 		}
 	});
 
 	$('#game').change(function () {
 		if($(this).is(':checked')){
-			console.log("checked true");
 			gameCheck = true;
 		}else{
-			console.log("checked false");
 			gameCheck = false;
 		}
 	});
